@@ -1,0 +1,30 @@
+/* Link Styling */
+
+a:link {
+    text-decoration: none;
+    color: var(--main-color);
+    display: inline-block;
+}
+
+a:hover, a:active {
+    color: var(--secondary-color);
+    background-color: var(--tertiary-color);
+}
+
+a:visited {
+    color: var(--main-color);
+}
+
+/* Button Styling */
+
+.button {
+    color: var(--light-text);
+    background-color: var(--secondary-color);
+    border: 0 solid var(--secondary-color);
+    border-radius: 6px;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: larger;
+    cursor: pointer;
+    display: block;
+}
