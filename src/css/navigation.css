@@ -1,11 +1,12 @@
 .navbar {
-    height: 35px;
     width: 100%;
     padding: 5px;
 }
 
 .brand {
     color: var(--main-color);
+    float: left;
+
 }
 
 .right-nav {

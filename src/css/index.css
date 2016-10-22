@@ -1,5 +1,36 @@
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  font-family: "Lucida Grande", "Verdana", "sans-serif";
+  font-size: 14px;
+  margin: 10px;
+  padding: 5px;
+  color: var(--tertiary-color);
+  /*background: url(../img/blacktexture.jpg);*/
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+.text {
+  background-color: rgba(192,192,192,0.3);
+  border-style: hidden;
+  border-bottom: 1px solid var(--tertiary-color);
+  padding: 5px;
+  height: 35px;
+  font-size: 14px;
+  display: block;
+  margin: 5px auto;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */

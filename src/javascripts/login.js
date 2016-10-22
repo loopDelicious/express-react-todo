@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../css/login.css';
 import $ from 'jquery';
 
 class Login extends Component {

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import brand from '../images/doge.jpg';
-import '../css/navigation.css';
+import brand from '../images/3dDoge.gif';
 
 class Navigation extends Component {
     render() {
