@@ -1,0 +1,27 @@
+.Login {
+    width: 250px;
+    text-align: left;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.login-intro {
+    margin: 15px auto;
+    color: var(--main-color);
+    font-size: 30px;
+    display: table;
+}
+
+.login-link {
+    color: var(--main-color);
+    float: right;
+    margin: 20px;
+}
+
+#login-container {
+    margin: 75px auto;
+    height: 300px;
+    width: 300px;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 15px;
+}
