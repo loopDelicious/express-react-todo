@@ -34,7 +34,7 @@ class Task extends Component {
                     <button className="button" type="submit">Submit</button>
                 </form>
                 <div id="task-list">
-                    
+
                 </div>
             </div>
         )
