@@ -6,26 +6,32 @@ class Task extends Component {
     state = {
         data: '',
         complete: false,
-        tasks: ['joyce','dan']
+        tasks: []
     };
 
-    // handleForm(e) {
-    //     e.preventDefault();
-    //
-    //     var data = this.refs.data.value;
-    //
-    //     $.ajax({
-    //         url: this.state.complete ? '/xxx' : '/xxx',
-    //         method: 'post',
-    //         data: data,
-    //         success() {
-    //             this.props.loginCallback();
-    //         },
-    //         error(res) {
-    //             alert(res.error)
-    //         },
-    //     })
-    // };
+    handleForm = (e) => {
+        e.preventDefault();
+
+        var data = {
+            text: this.refs['new-task'].value
+        };
+
+        $.ajax({
+            url: 'http://localhost:4000/tasks',
+            method: 'post',
+            data: data,
+            success: function() {
+                alert('success');
+                // this.setState({
+                //     tasks: this.state.tasks.push({
+                //         id: Date.now(),
+                //         text: data.text
+                //     })
+                // });
+            }.bind(this),
+
+        })
+    };
 
     componentDidMount() {
         $.ajax({
@@ -41,7 +47,7 @@ class Task extends Component {
 
     render() {
         var tasks = this.state.tasks.map( task => {
-            return <li key={task}>{task}</li>
+            return <li key={task.id}>{task.text}</li>
         });
 
         return(

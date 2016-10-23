@@ -1,3 +1,12 @@
+For development:
+
+`nodemon src/server.js` to start the API server on localhost:4000
+
+`npm start` will find index.js to start front-end server on localhost:3000
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.  
