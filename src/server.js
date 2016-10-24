@@ -48,7 +48,7 @@ app.post('/tasks', function(req, res, next) {
 
     db.none(insertion, [req.body.text, false])
         .then(function () {
-            res.json();
+            res.json('success');
         })
         .catch(function (err) {
             return next(err);
