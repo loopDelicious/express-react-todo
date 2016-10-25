@@ -38,14 +38,8 @@
     /*overflow: visible;*/
 /*}*/
 
-.noto-complete {
-    color: black;
-    background-color: var(--tertiary-color);
-    border: var(--tertiary-color);
-    border-radius: 6px;
-    padding: 8px;
-    margin: 5px;
-    font-size: 12px;
+.not-complete {
+    color: var(--main-color);
 }
 
 .not-complete:hover {
@@ -54,12 +48,7 @@
 
 .complete {
     color: var(--secondary-color);
-    background-color: var(--main-color);
-    border: var(--main-color);
-    border-radius: 6px;
-    padding: 8px;
-    margin: 5px;
-    font-size: 12px;
+    text-decoration: line-through;
 }
 
 .complete:hover {
@@ -72,11 +61,79 @@
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin-right: 24px;
 }
 
 /* Hide default HTML checkbox */
 .switch input {display:none;}
 
+
+/* The checkbox */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--main-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--main-color);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider:before {
+    border-radius: 50%;
+}
+
+
+.hidden {
+    /*visibility: hidden;*/
+    /*opacity: 0;*/
+    /*transition: visibility 0s, opacity 0.5s linear;*/
+    /*transition: opacity 5s ease-out;*/
+    /*transition-property: opacity, visibility;*/
+    /*transition-duration: 1s, 0;*/
+    /*transition-delay: 0, 1s;*/
+}
+
+.shown {
+    /*visibility: visible;*/
+    /*opacity: 1;*/
+    /*transition-property: visibility, opacity;*/
+    /*transition-duration: 0, 1s;*/
+    animation: show 6s linear;
+}
 
 li {
     text-align: left;

@@ -38,10 +38,12 @@ class Tasks extends Component {
     };
 
     handleListSave() {
-        if (this.state.tasks.complete == false) {
-            
-        }
+        this.state.tasks.filter( (task) => {
+            return task.complete == false;
+        });
     };
+
+    // TODO display tasks that are not-complete ONLY after Save button
 
     componentDidMount() {
         $.ajax({
@@ -67,12 +69,16 @@ class Tasks extends Component {
                                className={task.complete ? 'complete' : 'not-complete'}
                                checked={task.complete}
                         />
-                        <div className="fa fa-square-o fa-2x"></div>
+                        <div className="slider round"></div>
                     </label>
                     {task.text}
                 </li>
             )
         });
+
+        var complete_count = this.state.tasks.filter( (task) => {
+            return task.complete == true;
+        }).length;
 
         return(
             <div className="task-wrapper">
@@ -83,9 +89,12 @@ class Tasks extends Component {
                 <ul id="task-list">
                     {tasks}
                 </ul>
-                <button className="confirmation-button" type="submit" onSubmit={this.handleListSave}>
-                    Save Changes
-                </button>
+                { complete_count > 0 ?
+                    <button className={(complete_count > 0 ? 'enabled' : 'disabled') + ' button'}
+                            onClick={complete_count > 0 ? this.handleListSave : null}>
+                        Save Changes
+                    </button>
+                    : null }
             </div>
         )
     };
