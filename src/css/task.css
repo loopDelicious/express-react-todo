@@ -1,29 +1,42 @@
-input#task-input {
-    width: 300px;
-    font-size: 15px;
-    border-bottom: 1px solid transparent;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.5);
-    padding: 4px;
-    margin: 10px 0 10px 0;
+
+.task-wrapper {
+    padding: 0 25px;
 }
 
-input[type="submit"] {
-    padding: 4px 10px 4px 10px;
-    margin: 12px 0 36px;
-    font-size: 15px;
-    background-color: orchid;
-    border-radius: 4px;
+.task-text {
+    border: 1px solid var(--lightest-text);
+    border-bottom: 1px solid var(--main-color);
+    border-radius: 4px 0 0 4px;
+    height: 40px;
+    width: 450px;
+    position: relative;
+    margin-left: 40px;
+    margin-bottom: 40px;
+    padding-left: 10px;
+}
+
+.task-button {
+    height: 40px;
+    width: 80px;
+    background-color: var(--main-color);
     border: 1px solid transparent;
+    border-radius: 0 4px 4px 0;
+    color: var(--lightest-text);
+    position: absolute;
 }
 
-input[type='checkbox'] {
-    margin: 0 10px 10px;
-    height: 20px;
-    background: rgba(225,225,225,0.8);
+.checkbox {
+    background: none;
+    border: none;
+    color: var(--main-color);
+    cursor: pointer;
 }
 
-div#task {
-    width: 500px;
-    margin: 10px;
+li {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.fa {
+    margin-right: 10px;
 }

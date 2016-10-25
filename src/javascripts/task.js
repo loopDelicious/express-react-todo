@@ -51,14 +51,21 @@ class Task extends Component {
 
     render() {
         var tasks = this.state.tasks.map( task => {
-            return <li key={task.id}>{task.text}</li>
+            return (
+                <li key={task.id}>
+                    <button className="checkbox">
+                        <i className="fa fa-square-o fa-2x" />
+                    </button>
+                        {task.text}
+                </li>
+            )
         });
 
         return(
-            <div>
+            <div className="task-wrapper">
                 <form id="task-input" ref="user_form" onSubmit={this.handleForm}>
-                    <input className="text task" ref="new-task" placeholder="Add an item" autoFocus="true" />
-                    <button className="button" type="submit">Submit</button>
+                    <input className="task-text" ref="new-task" placeholder="Add an item" autoFocus="true" />
+                    <button className="task-button" type="submit">Submit</button>
                 </form>
                 <ul id="task-list">
                     {tasks}
