@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 
-class Task extends Component {
+class Tasks extends Component {
 
     state = {
-        data: '',
-        complete: false,
-        tasks: [],
+        tasks: [], // [{11.10.19, 'take out garbage},...]
     };
 
     handleForm = (e) => {
@@ -21,12 +19,8 @@ class Task extends Component {
             method: 'post',
             data: data,
             dataType: 'json',
-            success: function() {
-                this.state.tasks.push({
-                    id: Date.now(),
-                    text: data.text
-                });
-
+            success: function(obj) {
+                this.state.tasks.push(obj);
                 this.setState({
                     tasks: this.state.tasks
                 });
@@ -34,6 +28,19 @@ class Task extends Component {
             }.bind(this)
 
         })
+    };
+
+    handleTaskToggle = (index) => {
+        this.state.tasks[index].complete = !this.state.tasks[index].complete;
+        this.setState({
+            tasks: this.state.tasks
+        });
+    };
+
+    handleListSave() {
+        if (this.state.tasks.complete == false) {
+            
+        }
     };
 
     componentDidMount() {
@@ -50,13 +57,19 @@ class Task extends Component {
     };
 
     render() {
-        var tasks = this.state.tasks.map( task => {
+        var tasks = this.state.tasks.map( (task, i) => {
             return (
                 <li key={task.id}>
-                    <button className="checkbox">
-                        <i className="fa fa-square-o fa-2x" />
-                    </button>
-                        {task.text}
+
+                    <label className="switch">
+                        <input type="checkbox"
+                               onChange={this.handleTaskToggle.bind(null, i)}
+                               className={task.complete ? 'complete' : 'not-complete'}
+                               checked={task.complete}
+                        />
+                        <div className="fa fa-square-o fa-2x"></div>
+                    </label>
+                    {task.text}
                 </li>
             )
         });
@@ -70,9 +83,12 @@ class Task extends Component {
                 <ul id="task-list">
                     {tasks}
                 </ul>
+                <button className="confirmation-button" type="submit" onSubmit={this.handleListSave}>
+                    Save Changes
+                </button>
             </div>
         )
     };
 };
 
-export default Task;
+export default Tasks;

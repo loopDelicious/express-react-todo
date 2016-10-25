@@ -44,11 +44,11 @@ app.get('/tasks', function (req, res) {
 // POST to ADD new item to tasks list
 app.post('/tasks', function(req, res, next) {
 
-    var insertion = 'INSERT INTO tasks (text, complete) VALUES ($1, $2)';
+    var insertion = 'INSERT INTO tasks (text, complete) VALUES ($1, $2) RETURNING id, text, complete';
 
-    db.none(insertion, [req.body.text, false])
-        .then(function () {
-            res.json('success');
+    db.one(insertion, [req.body.text, false])
+        .then(function (id) {
+            res.json(id);
         })
         .catch(function (err) {
             return next(err);
