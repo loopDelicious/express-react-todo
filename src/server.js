@@ -41,7 +41,7 @@ app.get('/tasks', function (req, res) {
 });
 
 
-// POST to ADD new item to tasks list
+// POST to ADD new item to tasks db
 app.post('/tasks', function(req, res, next) {
 
     var insertion = 'INSERT INTO tasks (text, complete) VALUES ($1, $2) RETURNING id, text, complete';
@@ -56,13 +56,13 @@ app.post('/tasks', function(req, res, next) {
 });
 
 
-// PUT to UPDATE existing item in tasks list
-app.put('/tasks/:id', function(req, res, next) {
+// POST to UPDATE existing item in tasks db
+app.post('/tasks/update', function(req, res, next) {
 
     var itemID = parseInt(req.params.id);
     var update = 'UPDATE tasks SET complete=true WHERE id=$1';
 
-    db.none(update, [itemID])
+    db.one(update, [itemID])
         .then(function () {
             res.json();
         })

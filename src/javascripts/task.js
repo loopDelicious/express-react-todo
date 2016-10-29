@@ -4,7 +4,7 @@ import $ from 'jquery';
 class Tasks extends Component {
 
     state = {
-        tasks: [], // [{11.10.19, 'take out garbage},...]
+        tasks: [],
     };
 
     handleForm = (e) => {
@@ -26,7 +26,6 @@ class Tasks extends Component {
                 });
                 this.refs['user_form'].reset();
             }.bind(this)
-
         })
     };
 
@@ -37,10 +36,33 @@ class Tasks extends Component {
         });
     };
 
-    handleListSave() {
-        this.state.tasks.filter( (task) => {
-            return task.complete == false;
+    handleListSave = () => {
+        var new_completed = this.state.tasks.filter( (task) => {
+            return task.complete == true;
+        }).map( (task) => {
+            return task.id;
         });
+
+        // var new_completed = [];
+        //
+        // this.state.tasks.reduce( (new_completed, task) => {
+        //     if (task.complete == true) {
+        //         new_completed.push({
+        //             id: task.id
+        //         });
+        //     }
+        //     return new_completed;
+        // }, []);
+
+        $.ajax({
+            url: 'http://localhost:4000/tasks/update',
+            method: 'post',
+            data: new_completed,
+            dataType: 'json',
+            success: function() {
+                alert('success');
+            }.bind(this)
+        })
     };
 
     // TODO display tasks that are not-complete ONLY after Save button
@@ -84,14 +106,14 @@ class Tasks extends Component {
             <div className="task-wrapper">
                 <form id="task-input" ref="user_form" onSubmit={this.handleForm}>
                     <input className="task-text" ref="new-task" placeholder="Add an item" autoFocus="true" />
-                    <button className="task-button" type="submit">Submit</button>
+                    <button className="task-button" type="submit">Add</button>
                 </form>
                 <ul id="task-list">
                     {tasks}
                 </ul>
                 { complete_count > 0 ?
                     <button className={(complete_count > 0 ? 'enabled' : 'disabled') + ' button'}
-                            onClick={complete_count > 0 ? this.handleListSave : null}>
+                            onClick={this.handleListSave}>
                         Save Changes
                     </button>
                     : null }
