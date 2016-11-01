@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-var bcrypt = require('bcryptjs');
 
 class Login extends Component {
 

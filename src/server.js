@@ -104,39 +104,35 @@ app.post('/tasks/update', function(req, res, next) {
 app.post('/register', function(req, res, next) {
 
     var email = req.body.email;
-    var hash = bcrypt.hashSync(req.body.password, 8);
-    var insertion = 'INSERT INTO users (email, hash) VALUES ($1, $2) RETURNING id, email, hash';
 
-    db.one(insertion, [email, hash])
-        .then(function (id) {
-            res.json(id);
-        })
-        .catch(function (err) {
-            return next(err);
-        });
+    var hash = bcrypt.hash(req.body.password, 8, function(err, hash) {
+
+        var insertion = 'INSERT INTO users (email, hash) VALUES ($1, $2) RETURNING id, email, hash';
+
+        db.one(insertion, [email, hash])
+            .then(function (id) {
+                res.json(id);
+            })
+            .catch(function (err) {
+                return next(err);
+            });
+    });
 });
 
 // GET to verify user in users table
 app.get('/login', function(req, res, next) {
 
     var email = req.body.email;
-    var new_hash = bcrypt.hashSync(req.body.password, 8);
-    console.log(email);
-    console.log(req.body.password);
-
-    var possible_user = db.any('SELECT * FROM users WHERE email is ' + email);
-    if (new_hash == possible_user.hash) {
-        res.json('success');
-    } else {
-        res.json('please try again');
+    var user = db.one('SELECT hash FROM users WHERE email = $email');
+    console.log(user);
+    if (bcrypt.compareSync(req.body.password, user.hash)) {
+        res.json();
     }
 });
-
-
-
 
 
 
 app.listen(4000, function () {
     console.log('Example app listening on port 4000!');
 });
+
