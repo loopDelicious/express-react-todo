@@ -15,28 +15,34 @@ class Login extends Component {
         });
     };
 
-    handleForm(e) {
+    handleForm = (e) => {
         e.preventDefault();
 
-        var email = this.refs.email.value;
-        var password = this.refs.password.value;
-        console.log(email);
-        console.log(password);
+        // var email = this.refs.email.value;
+        // var password = this.refs.password.value;
+
+        var data = {
+            email: this.refs['email'].value,
+            password: this.refs['password'].value
+        };
+
         $.ajax({
             url: this.state.existingUser ? 'http://localhost:4000/login' : 'http://localhost:4000/register',
             method: this.state.existingUser ? 'get' : 'post',
-            data: {
-                email: email,
-                password: password,
-            },
+            data: data,
             dataType: 'json',
+            // success: function() {
+            //     this.setState({
+            //         loggedIn: !this.state.loggedIn
+            //     });
+            // }.bind(this)
             success: function() {
                 this.props.loginCallback();
-            }.bind(this),
-            error: function(res) {
-                alert(res.error)
-            }
-        });
+            }.bind(this)
+            // error: function(res) {
+            //     alert(res.error)
+            // }
+        })
     };
 
     render() {
@@ -47,7 +53,6 @@ class Login extends Component {
                     <input className="text email" ref="email" placeholder="email address" autoFocus="true" />
 
                     <input className="text password" ref="password" placeholder="password" />
-
 
                     <button className="button" type="submit">{this.state.existingUser ? 'Log in' : 'Create account'}</button>
 

@@ -122,15 +122,33 @@ app.post('/register', function(req, res, next) {
 // GET to verify user in users table
 app.get('/login', function(req, res, next) {
 
+    // var email = req.body.email;
+    // var user_query = 'SELECT hash FROM users WHERE email = ' + email;
+    //
+    // db.one(user_query)
+    //     .then(function(user) {
+    //         if (bcrypt.compareSync(req.body.password, user.hash)) {
+    //             res.json(user);
+    //         }
+    //     })
+    //     .catch(function(err) {
+    //         return next(err);
+    //     });
+
     var email = req.body.email;
-    var user = db.one('SELECT hash FROM users WHERE email = $email');
-    console.log(user);
-    if (bcrypt.compareSync(req.body.password, user.hash)) {
-        res.json();
-    }
+
+    var user_query = 'SELECT hash FROM users WHERE email = ' + email;
+
+    db.oneOrNone(user_query)
+        .then(function (user) {
+            if (user != null && (bcrypt.compareSync(req.body.password, user.hash))) {
+                res.json(user);
+            }
+        })
+        .catch(function (err) {
+            return next(err);
+        });
 });
-
-
 
 app.listen(4000, function () {
     console.log('Example app listening on port 4000!');
