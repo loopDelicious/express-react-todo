@@ -1,11 +1,16 @@
 .navbar {
     width: 100%;
     padding: 5px;
+    background-image: url('../images/jheader.png');
+    background-size: cover;
+    margin: 0;
+    border-radius: 0;
 }
 
 .brand {
     color: var(--main-color);
     float: left;
+    font-size: 30px;
 
 }
 

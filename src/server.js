@@ -28,10 +28,10 @@ db.none("CREATE TABLE IF NOT EXISTS tasks (id SERIAL, text TEXT, complete BOOLEA
 });
 
 
-// GET items from database
+// GET items from tasks table
 app.get('/tasks', function (req, res) {
 
-    db.any('SELECT * FROM tasks')
+    db.any('SELECT * FROM tasks WHERE complete is false')
         .then(function(tasks) {
             res.json(tasks);
         })
@@ -41,7 +41,7 @@ app.get('/tasks', function (req, res) {
 });
 
 
-// POST to ADD new item to tasks db
+// POST to ADD new item to tasks table
 app.post('/tasks', function(req, res, next) {
 
     var insertion = 'INSERT INTO tasks (text, complete) VALUES ($1, $2) RETURNING id, text, complete';
@@ -56,19 +56,41 @@ app.post('/tasks', function(req, res, next) {
 });
 
 
-// POST to UPDATE existing item in tasks db
+// POST to UPDATE existing item in tasks table
 app.post('/tasks/update', function(req, res, next) {
 
-    var itemID = parseInt(req.params.id);
-    var update = 'UPDATE tasks SET complete=true WHERE id=$1';
+    var itemList = req.body['ids[]'];
+    // console.log(itemList);
+    // console.log(typeof(itemList));  // 97 is string and errors forEach is not a function; [ '96', '97' ] is an object and submits
 
-    db.one(update, [itemID])
-        .then(function () {
-            res.json();
+    // console.log(itemList);  // { 'ids[]': [ '94', '95' ] }  OR THIS  { 'ids[]': '94' }
+    // console.log(itemList[0]);  // undefined
+    // console.log(itemList['ids']); // undefined
+    // console.log(itemList['ids[]']); // [ '94', '95' ]
+
+    if (typeof(itemList) != "string") {
+        itemList.forEach(function (item) {
+            var itemID = parseInt(item);
+            var update = 'UPDATE tasks SET complete=true WHERE id=$1';
+            db.any(update, [itemID])
+                .then(function () {
+                    res.json();
+                })
+                .catch(function (err) {
+                    return next(err);
+                });
         })
-        .catch(function (err) {
-            return next(err);
-        });
+    } else {
+        var itemID = parseInt(itemList);
+        var update = 'UPDATE tasks SET complete=true WHERE id=$1';
+        db.any(update, [itemID])
+            .then(function () {
+                res.json();
+            })
+            .catch(function (err) {
+                return next(err);
+            });
+        }
 });
 
 

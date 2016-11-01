@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './javascripts/App';
 import './css/reset.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import './css/variables.css';
 import './css/index.css';
 import './css/navigation.css';

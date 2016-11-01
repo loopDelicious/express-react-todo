@@ -38,34 +38,39 @@ class Tasks extends Component {
 
     handleListSave = () => {
         var new_completed = this.state.tasks.filter( (task) => {
-            return task.complete == true;
+            return task.complete === true;
         }).map( (task) => {
             return task.id;
         });
 
-        // var new_completed = [];
-        //
-        // this.state.tasks.reduce( (new_completed, task) => {
-        //     if (task.complete == true) {
-        //         new_completed.push({
-        //             id: task.id
-        //         });
-        //     }
-        //     return new_completed;
-        // }, []);
-
         $.ajax({
             url: 'http://localhost:4000/tasks/update',
             method: 'post',
-            data: new_completed,
+            data: {ids: new_completed},
             dataType: 'json',
             success: function() {
-                alert('success');
-            }.bind(this)
+                this.reset();
+            }
         })
     };
-
-    // TODO display tasks that are not-complete ONLY after Save button
+    
+    // TODO do i want a complete refresh of the page (via wrapping save button in form labels)? or is there a better way?
+    // reset() {
+    //     // this.setState({
+    //     //     tasks: this.state.tasks
+    //     // });
+    //
+    //     $.ajax({
+    //         url: "http://localhost:4000/tasks",
+    //         method: 'get',
+    //         dataType: 'json',
+    //         success: function(tasks) {
+    //             this.setState({
+    //                 tasks: tasks
+    //             })
+    //         }.bind(this)
+    //     })
+    // };
 
     componentDidMount() {
         $.ajax({
@@ -99,7 +104,7 @@ class Tasks extends Component {
         });
 
         var complete_count = this.state.tasks.filter( (task) => {
-            return task.complete == true;
+            return task.complete === true;
         }).length;
 
         return(
@@ -112,10 +117,13 @@ class Tasks extends Component {
                     {tasks}
                 </ul>
                 { complete_count > 0 ?
-                    <button className={(complete_count > 0 ? 'enabled' : 'disabled') + ' button'}
-                            onClick={this.handleListSave}>
-                        Save Changes
-                    </button>
+                    <form id="save">
+                        <button className={(complete_count > 0 ? 'enabled' : 'disabled') + ' button'}
+                                type="submit"
+                                onClick={this.handleListSave}>
+                            Save Changes
+                        </button>
+                    </form>
                     : null }
             </div>
         )

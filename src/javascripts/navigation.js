@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import brand from '../images/3dDoge.gif';
 
 class Navigation extends Component {
     render() {
         return (
             <div className="navbar">
-                <a className="brand" href="/"><img src={brand} alt="paper" /></a>
+                <a className="brand" href="/">paper</a>
 
                 { this.props.loggedIn ?
                     <ul className="right-nav">
