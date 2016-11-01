@@ -18,7 +18,7 @@ a:visited {
 /* Button Styling */
 
 .button {
-    color: var(--light-text);
+    color: var(--lightest-text);
     background-color: var(--secondary-color);
     border: 0 solid var(--secondary-color);
     border-radius: 6px;

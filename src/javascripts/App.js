@@ -6,7 +6,7 @@ import Task from './task.js';
 class App extends Component {
 
     state = {
-        loggedIn: true, // set loggedIn state to true for development
+        loggedIn: false, // set loggedIn state to true for development
     };
 
     userLoggedIn() {

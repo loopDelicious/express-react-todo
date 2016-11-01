@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+var bcrypt = require('bcryptjs');
 
 class Login extends Component {
 
@@ -9,8 +10,9 @@ class Login extends Component {
     };
 
     handleToggle() {
+        this.state.existingUser = !this.state.existingUser;
         this.setState({
-            existingUser: !this.state.existingUser
+            existingUser: this.state.existingUser
         });
     };
 
@@ -18,37 +20,39 @@ class Login extends Component {
         e.preventDefault();
 
         var email = this.refs.email.value;
-        var password = this.state.existingUser ? this.refs.password.value : null;
-
+        var password = this.refs.password.value;
+        console.log(email);
+        console.log(password);
         $.ajax({
-            url: this.state.existingUser ? '/login': '/register',
-            method: 'post',
+            url: this.state.existingUser ? 'http://localhost:4000/login' : 'http://localhost:4000/register',
+            method: this.state.existingUser ? 'get' : 'post',
             data: {
                 email: email,
                 password: password,
             },
-            success() {
+            dataType: 'json',
+            success: function() {
                 this.props.loginCallback();
-            },
-            error(res) {
+            }.bind(this),
+            error: function(res) {
                 alert(res.error)
-            },
-        })
+            }
+        });
     };
 
     render() {
         return (
             <div className="Login">
-                <form onSubmit={this.handleForm}>
+                <form onSubmit={this.handleForm.bind(this)}>
                     <span className="login-intro">{this.state.existingUser ? 'Log in' : 'Create an account' }</span>
                     <input className="text email" ref="email" placeholder="email address" autoFocus="true" />
-                    {this.state.existingUser ?
-                        <input className="text password" ref="password" placeholder="password" />
-                        : null}
 
-                    <button className="button" type="submit">Submit</button>
+                    <input className="text password" ref="password" placeholder="password" />
 
-                    <a className="login-link" onClick={this.handleToggle}>
+
+                    <button className="button" type="submit">{this.state.existingUser ? 'Log in' : 'Create account'}</button>
+
+                    <a className="login-link" onClick={this.handleToggle.bind(this)}>
                         {this.state.existingUser ? 'Create an account' : 'Have an account? Log in.'}
                     </a>
                 </form>

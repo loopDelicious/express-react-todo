@@ -53,7 +53,7 @@ class Tasks extends Component {
             }
         })
     };
-    
+
     // TODO do i want a complete refresh of the page (via wrapping save button in form labels)? or is there a better way?
     // reset() {
     //     // this.setState({
