@@ -18,27 +18,25 @@ class Login extends Component {
     handleForm = (e) => {
         e.preventDefault();
 
-        // var email = this.refs.email.value;
-        // var password = this.refs.password.value;
-
-        var data = {
-            email: this.refs['email'].value,
-            password: this.refs['password'].value
-        };
+        var email = this.refs.email.value;
+        var password = this.refs.password.value;
 
         $.ajax({
             url: this.state.existingUser ? 'http://localhost:4000/login' : 'http://localhost:4000/register',
-            method: this.state.existingUser ? 'get' : 'post',
-            data: data,
+            method: 'post',
+            data: {
+                email: email,
+                password: password
+            },
             dataType: 'json',
-            // success: function() {
-            //     this.setState({
-            //         loggedIn: !this.state.loggedIn
-            //     });
-            // }.bind(this)
             success: function() {
-                this.props.loginCallback();
+                this.setState({
+                    loggedIn: !this.state.loggedIn
+                });
             }.bind(this)
+            // success: function() {
+            //     this.props.loginCallback();
+            // }.bind(this)
             // error: function(res) {
             //     alert(res.error)
             // }

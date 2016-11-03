@@ -119,30 +119,19 @@ app.post('/register', function(req, res, next) {
     });
 });
 
-// GET to verify user in users table
-app.get('/login', function(req, res, next) {
-
-    // var email = req.body.email;
-    // var user_query = 'SELECT hash FROM users WHERE email = ' + email;
-    //
-    // db.one(user_query)
-    //     .then(function(user) {
-    //         if (bcrypt.compareSync(req.body.password, user.hash)) {
-    //             res.json(user);
-    //         }
-    //     })
-    //     .catch(function(err) {
-    //         return next(err);
-    //     });
+// POST to verify user in users table
+app.post('/login', function(req, res, next) {
 
     var email = req.body.email;
 
-    var user_query = 'SELECT hash FROM users WHERE email = ' + email;
+    var user_query = 'SELECT hash FROM users WHERE email = $1';
 
-    db.oneOrNone(user_query)
+    db.oneOrNone(user_query, [email])
         .then(function (user) {
             if (user != null && (bcrypt.compareSync(req.body.password, user.hash))) {
                 res.json(user);
+            } else {
+                res.json('no match');
             }
         })
         .catch(function (err) {

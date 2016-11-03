@@ -19,8 +19,9 @@ class App extends Component {
         return (
             <div className="App">
                 <Navigation loggedIn={this.state.loggedIn} />
-                {this.state.loggedIn ? <Task /> : <Login loginCallback={this.userLoggedIn} /> }
-          </div>
+                {/*{this.state.loggedIn ? <Task /> : <Login loginCallback={this.userLoggedIn} /> }*/}
+                {this.state.loggedIn ? <Task /> : <Login />}
+            </div>
         );
     }
 }
