@@ -39,7 +39,7 @@ class Login extends Component {
                 this.setState({
                     error: true
                 });
-            }
+            }.bind(this)
         })
     };
 
@@ -52,7 +52,7 @@ class Login extends Component {
                     <input className="text email" ref="email" placeholder="email address" autoFocus="true" />
                     <input className="text password" ref="password" placeholder="password" />
 
-                    <span className="error-message">{this.state.error ? 'Sorry, please try again' : null }</span>
+                    <span className="error-message">{this.state.error ? 'Sorry, please try again' : '' }</span>
 
                     <button className="button" type="submit">{this.state.existingUser ? 'Log in' : 'Create account'}</button>
 

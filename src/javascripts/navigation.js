@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 
 class Navigation extends Component {
+
+    handleLogout() {
+        this.props.logoutCallback();
+        // TODO set state to loggedIn: false?
+    };
+
     render() {
         return (
             <div className="navbar">
@@ -8,7 +14,7 @@ class Navigation extends Component {
 
                 { this.props.loggedIn ?
                     <ul className="right-nav">
-                        <li><a href="/">log out</a></li>
+                        <li><a onClick={this.handleLogout.bind(this)}>log out</a></li>
                     </ul>
                 : null }
             </div>

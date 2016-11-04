@@ -9,6 +9,12 @@ class App extends Component {
         loggedIn: false,
     };
 
+    userLoggedOut = () => {
+        this.setState({
+            loggedIn: false
+        });
+    };
+
     userLoggedIn = () => {
         this.setState({
             loggedIn: true,
@@ -18,7 +24,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navigation loggedIn={this.state.loggedIn} />
+                <Navigation logoutCallback={this.userLoggedOut} />
                 {this.state.loggedIn ? <Task /> : <Login loginCallback={this.userLoggedIn} /> }
             </div>
         );

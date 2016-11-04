@@ -131,7 +131,7 @@ app.post('/login', function(req, res, next) {
             if (user != null && (bcrypt.compareSync(req.body.password, user.hash))) {
                 res.json(user);
             } else {
-                res.status(400);
+                res.status(422);
                 res.send('None shall pass');
             }
         })
