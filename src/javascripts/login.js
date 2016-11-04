@@ -4,8 +4,8 @@ import $ from 'jquery';
 class Login extends Component {
 
     state = {
-        loggedIn: false,
-        existingUser: true
+        existingUser: true,
+        error: false
     };
 
     handleToggle() {
@@ -29,17 +29,17 @@ class Login extends Component {
                 password: password
             },
             dataType: 'json',
-            success: function() {
+            success: function () {
                 this.setState({
-                    loggedIn: !this.state.loggedIn
+                    existingUser: true
                 });
-            }.bind(this)
-            // success: function() {
-            //     this.props.loginCallback();
-            // }.bind(this)
-            // error: function(res) {
-            //     alert(res.error)
-            // }
+                this.props.loginCallback();
+            }.bind(this),
+            error: function(err) {
+                this.setState({
+                    error: true
+                });
+            }
         })
     };
 
@@ -48,9 +48,11 @@ class Login extends Component {
             <div className="Login">
                 <form onSubmit={this.handleForm.bind(this)}>
                     <span className="login-intro">{this.state.existingUser ? 'Log in' : 'Create an account' }</span>
-                    <input className="text email" ref="email" placeholder="email address" autoFocus="true" />
 
+                    <input className="text email" ref="email" placeholder="email address" autoFocus="true" />
                     <input className="text password" ref="password" placeholder="password" />
+
+                    <span className="error-message">{this.state.error ? 'Sorry, please try again' : null }</span>
 
                     <button className="button" type="submit">{this.state.existingUser ? 'Log in' : 'Create account'}</button>
 

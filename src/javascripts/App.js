@@ -6,10 +6,10 @@ import Task from './task.js';
 class App extends Component {
 
     state = {
-        loggedIn: false, // set loggedIn state to true for development
+        loggedIn: false,
     };
 
-    userLoggedIn() {
+    userLoggedIn = () => {
         this.setState({
             loggedIn: true,
         });
@@ -19,8 +19,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Navigation loggedIn={this.state.loggedIn} />
-                {/*{this.state.loggedIn ? <Task /> : <Login loginCallback={this.userLoggedIn} /> }*/}
-                {this.state.loggedIn ? <Task /> : <Login />}
+                {this.state.loggedIn ? <Task /> : <Login loginCallback={this.userLoggedIn} /> }
             </div>
         );
     }
